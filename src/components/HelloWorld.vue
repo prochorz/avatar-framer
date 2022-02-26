@@ -6,7 +6,11 @@ import { fabric } from 'fabric';
 const images = ['frame-1', 'frame-2', 'frame-3'];
 
 function getImageUrl(name) {
-  return new URL(`/${name}.png`, import.meta.url).href
+  if (import.meta.url) {
+    return new URL(`/${name}.png`, import.meta.url).href
+  }
+
+  return `/avatar-framer/${name}.png`;
 }
 
 const canvasRef = ref();
