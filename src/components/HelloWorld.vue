@@ -6,7 +6,7 @@ import { fabric } from 'fabric';
 const images = ['frame-1', 'frame-2', 'frame-3'];
 
 function getImageUrl(name) {
-  return new URL(`../../public/${name}.png`, import.meta.url).href
+  return new URL(`./dist/${name}.png`, import.meta.url).href
 }
 
 const canvasRef = ref();
