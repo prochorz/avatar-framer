@@ -4,7 +4,7 @@
 set -e
 
 # build
-npm run build
+npm run build-pages
 
 # navigate into the build output directory
 cd dist
