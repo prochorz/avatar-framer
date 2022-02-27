@@ -186,12 +186,20 @@ function trackPageScrolling() {
   clearTimeout(timeoutId);
   if (isTouchExist) {
     preventCanvasClass.value = 'prevent-canvas-move';
-  } 
+  }
   timeoutId = setTimeout(() => {
     preventCanvasClass.value = null;
   }, 500);
 }
 
+const preventDefaultCanvasClass = ref(null)
+watch(isImageExist, isExist => {
+    if (isExist) {
+        preventDefaultCanvasClass.value = null
+    } else {
+        preventDefaultCanvasClass.value = 'prevent-default-canvas-move';
+    }
+}, { immediate: true });
 
 onMounted(run);
 
@@ -206,6 +214,7 @@ defineExpose({
   inputs,
   isImageExist,
   preventCanvasClass,
+  preventDefaultCanvasClass,
   updateAngle,
   updateScale,
   getImageUrl,
@@ -247,7 +256,7 @@ defineExpose({
         </div>
         <div class="main__step__builder">
           <div
-            :class="preventCanvasClass"
+            :class="[preventCanvasClass, preventDefaultCanvasClass]"
             class="main__step__builder__ava"
           >
             <canvas

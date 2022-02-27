@@ -532,7 +532,8 @@ input[type=range]:focus::-ms-fill-upper {
   font-size: 14px;
 }
 
-.prevent-canvas-move {
+.prevent-canvas-move,
+.prevent-default-canvas-move{
   pointer-events: none;
 }
 }
