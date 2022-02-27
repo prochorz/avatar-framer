@@ -135,7 +135,7 @@ function updateAngle() {
 }
 
 function updateScale() {
-  image.scale(parseFloat(inputs.scale) / 50).setCoords();
+  image.scale(parseFloat(inputs.scale) / 20).setCoords();
   canvasRef.value.requestRenderAll();
 }
 
