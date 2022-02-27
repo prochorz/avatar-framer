@@ -1,11 +1,14 @@
 <script setup>
-import {ref, onMounted, defineExpose} from 'vue';
+import {ref, onMounted, reactive, defineExpose, watch} from 'vue';
 import Dropzone from 'dropzone';
 import {fabric} from 'fabric';
 
 Dropzone.autoDiscover = false;
 
-const images = ['frame-1', 'frame-2', 'frame-3'];
+// Change the canvas frames
+// one per frame
+// add your frames here
+const images = Array(14).fill(null).map((_, index) => 'frame-' + (index + 1));
 
 function getImageUrl(name) {
   if (import.meta.url) {
@@ -16,18 +19,17 @@ function getImageUrl(name) {
 }
 
 const canvasRef = ref();
+const refAngleControl = ref();
+
+// image to be added to the canvas
+var image = new fabric.Image();
 
 function run() {
   // define the canvas
-  const canvas = new fabric.Canvas('canvas-id', {
+  canvasRef.value = new fabric.Canvas('canvas-id', {
     width: 500,
     height: 500
   });
-
-  canvasRef.value = canvas;
-
-  // image to be added to the canvas
-  var image = new fabric.Image();
 
   // declare the dropzone
   var imgUpload = new Dropzone("#upload", {
@@ -48,33 +50,27 @@ function run() {
       return document.getElementById(id)
     };
 
-    var angleControl = $('angle-control');
-    angleControl.oninput = function () {
-      image.set('angle', parseInt(this.value, 10)).setCoords();
-      canvas.requestRenderAll();
-    };
-
     var scaleControl = $('scale-control');
     scaleControl.oninput = function () {
       image.scale(parseFloat(this.value) / 200).setCoords();
-      canvas.requestRenderAll();
+      canvasRef.value.requestRenderAll();
     };
 
     function updateControls() {
       scaleControl.value = image.scaleX;
-      angleControl.value = image.angle;
+      refAngleControl.value.value = image.angle;
     }
 
-    canvas.on({
+    canvasRef.value.on({
       'object:moving': updateControls,
       'object:scaling': updateControls,
       'object:resizing': updateControls,
       'object:rotating': updateControls
     });
 
-    canvas.setOverlayImage(getImageUrl('frames/' + images[0]), function () {
-      canvas.overlayImage.scaleToWidth(canvas.getWidth())
-      canvas.renderAll()
+    canvasRef.value.setOverlayImage(getImageUrl('frames/' + images[0]), function () {
+      canvasRef.value.overlayImage.scaleToWidth(canvasRef.value.getWidth())
+      canvasRef.value.renderAll()
     }, {
       originX: 'left',
       originY: 'top',
@@ -109,12 +105,12 @@ function run() {
         hasControls: false
       });
 
-      image.scaleToHeight(canvas.getHeight());
-      image.scaleToWidth(canvas.getWidth());
-      canvas.centerObject(image);
-      canvas.add(image);
-      canvas.renderAll();
-      canvas.setActiveObject(image);
+      image.scaleToHeight(canvasRef.value.getHeight());
+      image.scaleToWidth(canvasRef.value.getWidth());
+      canvasRef.value.centerObject(image);
+      canvasRef.value.add(image);
+      canvasRef.value.renderAll();
+      canvasRef.value.setActiveObject(image);
     });
   };
 
@@ -135,40 +131,25 @@ function run() {
   // disable the download button and controls
   // re-add the upload text
   imgUpload.on("removedfile", function () {
-    canvas.remove(image);
+    canvasRef.value.remove(image);
     document.getElementById("download").disabled = true;
     document.getElementById("angle-control").disabled = true;
     document.getElementById("scale-control").disabled = true;
     document.getElementById("upload-text").innerHTML = "Загрузить";
   });
+}
 
-  // Change the canvas frames
-  // one per frame
-  // add your frames here
+function angleControlHandler(event) {
+  image.set('angle', parseInt(event.target.value, 10)).setCoords();
+  canvasRef.value.requestRenderAll();
+}
 
-  const frames = ['frame-1.png', 'frame-2.png', 'frame-3.png'];
-
-  // {% for image in site.static_files %}
-  // {% if image.path contains 'frames/' %}
-  // document.getElementById("{{ image.basename }}").addEventListener("click", function (){
-  //   changeFrame(canvas, '{{ image.path | relative_url }}');
-  // });
-  // {% endif %}
-  // {% endfor %}
-
-  // handle download
-  // create a link and simulate a click to download the file
-  var download = document.getElementById("download");
-  download.addEventListener('click', function () {
-    var e = canvas.toDataURL({format: "jpeg", quality: 1, multiplier: 4});
-    if (window.URL && e) {
-      if (window.navigator.msSaveOrOpenBlob) window.navigator.msSaveOrOpenBlob(t, "profile-pic.jpeg");
-      else {
-        var r = document.createElement("a");
-        (r.href = e), (r.download = "profile-pic.jpeg"), document.body.appendChild(r), r.click(), document.body.removeChild(r);
-      }
-    }
-  }, false);
+// handle download
+// create a link and simulate a click to download the file
+function downloadFile() {
+  var e = canvasRef.value.toDataURL({format: "jpeg", quality: 1, multiplier: 4});
+  var r = document.createElement("a");
+  (r.href = e), (r.download = "profile-pic.jpeg"), document.body.appendChild(r), r.click(), document.body.removeChild(r);
 }
 
 function resizeCanvas() {
@@ -181,19 +162,15 @@ function resizeCanvas() {
   outerCanvasContainer.style.height = `${outerCanvasContainer.clientWidth}px`;
 }
 
-function changeFrame(canvas, image) {
-  canvas.setOverlayImage(image, function () {
-    canvas.overlayImage.scaleToWidth(canvas.getWidth())
-    canvas.renderAll()
+function changeFrame(image) {
+  canvasRef.value.setOverlayImage(image, function () {
+    canvasRef.value.overlayImage.scaleToWidth(canvasRef.value.getWidth())
+    canvasRef.value.renderAll()
   }, {
     originX: 'left',
     originY: 'top',
     crossOrigin: 'anonymous'
   });
-}
-
-function onChangeFrameHandler(imgUrl) {
-  changeFrame(canvasRef.value, imgUrl);
 }
 
 onMounted(run);
@@ -205,8 +182,11 @@ window.addEventListener('resize', resizeCanvas);
 
 defineExpose({
   images,
+  refAngleControl,
   getImageUrl,
-  onChangeFrameHandler
+  changeFrame,
+  angleControlHandler,
+  downloadFile
 });
 
 </script>
@@ -251,7 +231,17 @@ defineExpose({
             <div class="main__step__builder__ava-controls">
               <div class="pt-6">
                 <label for="angle-control" class="text-lg font-medium leading-5">Rotation:</label>
-                <input type="range" id="angle-control" value="0" min="0" max="360" class="w-full" disabled>
+                <input
+                    ref="refAngleControl"
+                    type="range"
+                    id="angle-control"
+                    value="0"
+                    min="0"
+                    max="360"
+                    class="w-full"
+                    disabled
+                    @input="angleControlHandler"
+                >
               </div>
               <div class="pt-6">
                 <label for="scale-control" class="text-lg font-medium leading-5">Scale:</label>
@@ -260,14 +250,15 @@ defineExpose({
             </div>
           </div>
           <div>
-            <img
+            <button
                 v-for="item in images"
-                :id="`frame-` + item"
-                class="object-contain w-full max-w-6 rounded-full border-2 border-gray-100 inline-block shadow-xl transition duration-300 ease-in-out cursor-pointer hover:border-primary"
-                :src="getImageUrl(`previews/`+ item)"
-                alt=""
-                @click="onChangeFrameHandler(getImageUrl(`frames/`+ item))"
+                @click="changeFrame(getImageUrl(`frames/`+ item))"
             >
+              <img
+                  :id="`frame-` + item"
+                  :src="getImageUrl(`previews/`+ item)"
+              >
+            </button>
           </div>
         </div>
 
@@ -275,7 +266,11 @@ defineExpose({
       <div class="main__step">
         Download your new profile image!
 
-        <button id="download" disabled>
+        <button
+            id="download"
+            disabled
+            @click="downloadFile"
+        >
           Download profile picture
         </button>
       </div>
@@ -283,8 +278,4 @@ defineExpose({
   </div>
 </template>
 
-<style scoped>
-a {
-  color: #42b983;
-}
-</style>
+<style scoped />

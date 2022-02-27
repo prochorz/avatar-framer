@@ -10,6 +10,5 @@ import HelloWorld from './components/HelloWorld.vue'
 
 </template>
 
-<style src="./assets/scss/app.scss" type="scss" />
-
-<style src="./assets/styles.css" type="text/css" />
+<style src="../node_modules/reset-css/reset.css" lang="css" />
+<style src="./assets/scss/app.scss" lang="scss" />
