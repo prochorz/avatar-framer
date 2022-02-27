@@ -1,42 +1,51 @@
 <template>
-    <div class="main__step main__step--3 main__step main__step--social">
+    <div class="main__step main__step--4">
         <div class="main__step___message">
-            <span class="main__step__count">3</span>
-            <div class="main__step__text"></div>
+          <span class="main__step__count">4</span>
+          <div class="main__step__text">Поделитесь в соц сетях и создайте мир над головами</div>
         </div>
-        <div class="main__step__input">
-            Поделитесь в соц сетях и создайте мир над головами
-            <ShareNetwork
+        <div class="main__step__share">
+          <div class="main__step__share--item">
+             <ShareNetwork
                 network="vk"
                 :url="LINK"
                 :title="SOCIAL_TITLE"
                 :description="SOCIAL_DESCRIPTION"
             >
-                Share on vk
+                <img :src="vk_share" alt="">
             </ShareNetwork>
+          </div>
+          <div class="main__step__share--item">
             <ShareNetwork
                 network="facebook"
                 :url="LINK"
                 :title="SOCIAL_TITLE"
                 :description="SOCIAL_DESCRIPTION"
             >
-                Share on Facebook
+                <!-- <img :src="getImageUrl('share/fb_share','svg')" alt=""> -->
             </ShareNetwork>
-            <ShareNetwork
+          </div>
+          <div class="main__step__share--item">
+             <ShareNetwork
                 network="odnoklassniki"
                 :url="LINK"
                 :title="SOCIAL_TITLE"
                 :description="SOCIAL_DESCRIPTION"
             >
-                Share on odnoklassniki
+                <!-- <img :src="getImageUrl('share/od_share','svg')"  alt=""> -->
             </ShareNetwork>
+          </div>
         </div>
-    </div>
+      </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 
+import vk_share from '../../assets/img/share/vk_share.svg';
+console.log(vk_share)
+// import { defineComponent } from 'vue';
+// import { defineComponent } from 'vue';
 
 export default defineComponent({
     name: 'Social',

@@ -2,66 +2,66 @@
 
 :root {
   font-family: $font-family;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 input[type=range] {
-  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
-  width: 100%; /* Specific width is required for Firefox. */
-  background: transparent; /* Otherwise white in Chrome */
+  // -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  // width: 100%; /* Specific width is required for Firefox. */
+  // background: transparent; /* Otherwise white in Chrome */
 
   &::-webkit-slider-thumb {
-    -webkit-appearance: none;
+    // -webkit-appearance: none;
   }
 
   &:focus {
     outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
   }
 
-  &::-ms-track {
-    width: 100%;
-    cursor: pointer;
+  // &::-ms-track {
+  //   width: 100%;
+  //   cursor: pointer;
 
-    /* Hides the slider so custom styles can be added */
-    background: transparent;
-    border-color: transparent;
-    color: transparent;
-  }
+  //   /* Hides the slider so custom styles can be added */
+  //   background: transparent;
+  //   border-color: transparent;
+  //   color: transparent;
+  // }
 
   /* Special styling for WebKit/Blink */
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    border: 1px solid #000000;
-    height: 36px;
-    width: 16px;
-    border-radius: 3px;
-    background: #ffffff;
-    cursor: pointer;
-    margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
-  }
+  // &::-webkit-slider-thumb {
+  //   -webkit-appearance: none;
+  //   border: 1px solid #000000;
+  //   height: 36px;
+  //   width: 16px;
+  //   border-radius: 3px;
+  //   background: #ffffff;
+  //   cursor: pointer;
+  //   margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  //   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
+  // }
 
-  /* All the same stuff for Firefox */
-  &::-moz-range-thumb {
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    border: 1px solid #000000;
-    height: 36px;
-    width: 16px;
-    border-radius: 3px;
-    background: #ffffff;
-    cursor: pointer;
-  }
+  // /* All the same stuff for Firefox */
+  // &::-moz-range-thumb {
+  //   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  //   border: 1px solid #000000;
+  //   height: 36px;
+  //   width: 16px;
+  //   border-radius: 3px;
+  //   background: #ffffff;
+  //   cursor: pointer;
+  // }
 
-  /* All the same stuff for IE */
-  &::-ms-thumb {
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    border: 1px solid #000000;
-    height: 36px;
-    width: 16px;
-    border-radius: 3px;
-    background: #ffffff;
-    cursor: pointer;
-  }
+  // /* All the same stuff for IE */
+  // &::-ms-thumb {
+  //   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  //   border: 1px solid #000000;
+  //   height: 36px;
+  //   width: 16px;
+  //   border-radius: 3px;
+  //   background: #ffffff;
+  //   cursor: pointer;
+  // }
 }
 
 body {
@@ -75,8 +75,8 @@ body {
 }
 
 .main__header {
-  padding-top: 22px;
-  padding-bottom: 86px;
+  padding-top: 36px;
+  padding-bottom: 33px;
   text-align: center;
 }
 
@@ -89,17 +89,20 @@ body {
 }
 
 .main__slogan {
-  width: 90%;
+  width: 81%;
   margin: auto;
   font-size: 21px;
   line-height: 26px;
+  strong{
+    font-weight: 700;
+  }
 }
 
 .main__hash {
   font-weight: 900;
   font-size: 64px;
   color: #01B2FF;
-
+  margin-bottom: 9px;
   span {
     color: #FED500;
   }
@@ -108,23 +111,53 @@ body {
 .main__step {
   padding: 15px 30px;
   background: white;
-  margin-bottom: 30px;
+  margin-bottom: 16px;
 
   &:nth-child(even) {
     background: #E7F8FF;
   }
+  &:nth-child(4) {
+    
+  }
 
   &.main__step--1 {
     display: flex;
+    // padding: 20px 30px 15px 37px;
+    align-items: flex-end;
+  }
+  &--4{
+    display: flex;
+    align-items: center;
+    background: #FFFAE0;
+
   }
 }
 
 .main__step__input {
-  margin-left: 100px;
+  margin-left: auto;
   width: 50%;
   display: flex;
   align-items: center;
   justify-content: end;
+  margin-right: 44px;
+}
+.main__step__share {
+  margin-left: auto;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 44px;
+  &--item{
+    width: 64px;
+    margin: 0 15px;
+    a{
+      display: block;
+    }
+  }
+  &--counter{
+    text-align: center;
+  }
 }
 
 .main__step__count {
@@ -132,34 +165,44 @@ body {
   font-size: 24px;
   line-height: 130%;
   color: #C1C1C1;
-  margin-right: 24px;
+  margin-right: 15px;
 }
 
 .main__step__text {
-  font-size: 24px;
+  font-size: 18px;
   line-height: 32px;
 }
 
 .main__step___message {
   display: flex;
 }
-
+#download,
 .main__step__btn {
   padding: 10px 15px;
   background: #000;
   color: #fff;
   font-size: 18px;
   line-height: 130%;
+  width: 500px;
+  max-width: 100%;
+  cursor: pointer;
+  border: none;
+  transition: background 200ms;
+  &:hover{
+    background: rgb(50, 50, 50);
+
+  }
 }
 
 .main__step__builder {
   display: flex;
+  margin-top: 15px;
 }
 
 .main__step__builder__ava {
   min-width: 350px;
   width: 350px;
-  height: 350px;
+  // height: 350px;
   position: relative;
   margin-right: 70px;
 }
@@ -171,8 +214,173 @@ body {
 }
 
 .main__step__builder__ava-controls {
-  position: absolute;
+  // position: absolute;
   top: 0;
   left: 0;
   right: 0;
+}
+.main__mask_buttons{
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin: 0 -18px;
+  button{
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    margin: 0 18px 25px;
+    border-radius: 50%;
+    // overflow: hidden;
+    padding: 0;
+    border: none;
+    position: relative;
+    
+    background: rgba(254, 213, 0);
+    background: rgba(0,0,0);
+    &:after{
+      border-radius: 50%;
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      bottom: -1px;
+      right: -1px;
+      background: rgba(254, 213, 0,.25);
+      z-index: 1;
+      border: 5px solid #FED600;
+      opacity: 0;
+      transition: opacity 200ms;
+    }
+    
+    &.active{
+      &:after{
+        opacity: 1;
+      }
+    }
+  }
+
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+}
+
+.pt-6{
+  position: relative;
+  font-size: 16px;
+  margin-top: 1em;
+  &:before,
+  &:after{
+    position: absolute;
+    top: 0;
+    pointer-events: none;
+    color: #B6CAD2;
+  }
+  &:before{
+    content: '-';
+    left: 0;
+  }
+  &:after{
+    content: '+';
+    right: 0;
+  }
+  label{
+    display: none;
+  }
+  &--rotation{
+    display: none;
+  }
+}
+
+input[type=range] {
+  height: 25px;
+  -webkit-appearance: none;
+  margin: 5px 0 0;
+  width: 100%;
+  background: none;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 2px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0px 0px 0px #000000;
+  background: #B6CAD2;
+  border-radius: 1px;
+  border: 0px solid #000000;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0px 0px 0px #000000;
+  border: 2px solid #E7F8FF;
+  height: 16px;
+  width: 16px;
+  border-radius: 25px;
+  background: #626769;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -7px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #B6CAD2;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0px 0px 0px #000000;
+  background: #B6CAD2;
+  border-radius: 1px;
+  border: 0px solid #000000;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0px 0px 0px #000000;
+  border: 1px solid #B6CAD2;
+  height: 18px;
+  width: 18px;
+  border-radius: 25px;
+  background: #A1D0FF;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #B6CAD2;
+  border: 0px solid #000000;
+  border-radius: 2px;
+  box-shadow: 0px 0px 0px #000000;
+}
+input[type=range]::-ms-fill-upper {
+  background: #B6CAD2;
+  border: 0px solid #000000;
+  border-radius: 2px;
+  box-shadow: 0px 0px 0px #000000;
+}
+input[type=range]::-ms-thumb {
+  margin-top: 1px;
+  box-shadow: 0px 0px 0px #000000;
+  border: 1px solid #B6CAD2;
+  height: 18px;
+  width: 18px;
+  border-radius: 25px;
+  background: #A1D0FF;
+  cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #B6CAD2;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #B6CAD2;
 }

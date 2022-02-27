@@ -11,12 +11,12 @@ Dropzone.autoDiscover = false;
 // add your frames here
 const images = Array(14).fill(null).map((_, index) => 'frame-' + (index + 1));
 
-function getImageUrl(name) {
+function getImageUrl(name, extension = 'png') {
   if (import.meta.url) {
-    return new URL(`/${name}.png`, import.meta.url).href
+    return new URL(`/${name}.${extension}`, import.meta.url).href
   }
 
-  return `./${name}.png`;
+  return `./${name}.${extension}`;
 }
 
 const canvasRef = ref();
@@ -230,7 +230,7 @@ defineExpose({
             />
 
             <div class="main__step__builder__ava-controls">
-              <div class="pt-6">
+              <div class="pt-6 pt-6--rotation">
                 <label for="angle-control" class="text-lg font-medium leading-5">Rotation:</label>
                 <input
                     ref="refAngleControl"
@@ -250,7 +250,7 @@ defineExpose({
               </div>
             </div>
           </div>
-          <div>
+          <div class="main__mask_buttons">
             <button
                 v-for="item in images"
                 @click="changeFrame(getImageUrl(`frames/`+ item))"
@@ -264,17 +264,23 @@ defineExpose({
         </div>
 
       </div>
-      <div class="main__step">
-        Download your new profile image!
 
-        <button
-            id="download"
-            disabled
-            @click="downloadFile"
-        >
-          Download profile picture
-        </button>
+      <div class="main__step main__step--1">
+        <div class="main__step___message">
+          <span class="main__step__count">3</span>
+          <div class="main__step__text">Скачайте картинку и установите на аватарку</div>
+        </div>
+        <div class="main__step__input">
+          <button
+              id="download"
+              disabled
+              @click="downloadFile"
+          >
+            Скачать
+          </button>
+          </div>
       </div>
+
     </div>
     <social />
   </div>
