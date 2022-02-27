@@ -235,8 +235,7 @@ body {
     border: none;
     position: relative;
     
-    background: rgba(254, 213, 0);
-    background: rgba(0,0,0);
+    background: rgba(0,0,0) url(../img/button_bg.jpg) center/cover no-repeat;
     &:after{
       border-radius: 50%;
       content: '';
@@ -323,6 +322,9 @@ input[type=range] {
   margin: 5px 0 0;
   width: 100%;
   background: none;
+  &:disabled{
+    opacity: 0.1;
+  }
 }
 input[type=range]:focus {
   outline: none;
@@ -408,6 +410,12 @@ input[type=range]:focus::-ms-fill-upper {
   background: #B6CAD2;
 }
 
+.canvas-container{
+  &.freeze{
+    pointer-events: none;
+  }
+}
+
 @media (max-width: 1200px){
   .wrapper{
     max-width: 720px;
@@ -472,6 +480,37 @@ input[type=range]:focus::-ms-fill-upper {
     flex-wrap: nowrap;
     overflow-x: auto;
     margin: 0;
+    $size: 2px;
+    $foreground-color: #ccc;
+    $background-color: mix($foreground-color, white, 20%);
+    &::-webkit-scrollbar {
+      width:  $size;
+      height: $size;
+  }
+
+  &::-webkit-scrollbar-thumb {
+      background: $foreground-color;
+      &:hover{
+        background: mix($foreground-color, white, 60%);
+      }
+  }
+
+  &::-webkit-scrollbar-track {
+      background: $background-color;
+  }
+
+  // For Internet Explorer and FF
+  & {
+    scrollbar-face-color: $foreground-color;
+    scrollbar-track-color: $background-color;
+    overflow-y: auto;
+    scrollbar-color: $background-color $foreground-color;
+    scrollbar-width: thin;
+    transition: scrollbar-color 0.3s ease-out;
+    &:hover{
+      scrollbar-color: mix($foreground-color, white, 60%);
+    }
+  }
     button{
       flex-shrink: 0;
       width: 60px;
