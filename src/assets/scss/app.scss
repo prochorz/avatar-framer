@@ -1,0 +1,115 @@
+@import "fonts";
+
+:root {
+  font-family: $font-family;
+  font-weight: 700;
+}
+
+body {
+  background-color: #F5F9FB;
+  background-image: url("../img/bg.png");
+}
+
+.wrapper {
+  max-width: 1124px;
+  margin: 0 auto;
+}
+
+.main__header {
+  padding-top: 22px;
+  padding-bottom: 86px;
+  text-align: center;
+}
+
+.main__title {
+  font-weight: 700;
+  font-size: 36px;
+  text-align: center;
+  line-height: 44px;
+  margin-bottom: 18px;
+}
+
+.main__slogan {
+  width: 90%;
+  margin: auto;
+  font-size: 21px;
+  line-height: 26px;
+}
+
+.main__hash {
+  font-weight: 900;
+  font-size: 64px;
+  color: #01B2FF;
+
+  span {
+    color: #FED500;
+  }
+}
+
+.main__step {
+  padding: 15px 30px;
+  background: white;
+  margin-bottom: 30px;
+
+  &:nth-child(even) {
+    background: #E7F8FF;
+  }
+
+  &.main__step--1 {
+    display: flex;
+  }
+}
+
+.main__step__input {
+  margin-left: 100px;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.main__step__count {
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 130%;
+  color: #C1C1C1;
+  margin-right: 24px;
+}
+
+.main__step__text {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.main__step___message {
+  display: flex;
+}
+
+.main__step__btn {
+  padding: 10px 15px;
+  background: #000;
+  color: #fff;
+  font-size: 18px;
+  line-height: 130%;
+}
+
+.main__step__builder {
+  display: flex;
+}
+
+.main__step__builder__ava {
+  width: 350px;
+  height: 350px;
+  position: relative;
+}
+
+.main__step__builder__ava-canvas {
+  border: 1px solid grey;
+}
+
+.main__step__builder__ava-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}

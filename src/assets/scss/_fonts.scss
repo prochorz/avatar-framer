@@ -1,0 +1,17 @@
+$font-family: 'proxima_nova';
+
+@font-face {
+    font-family: $font-family;
+    src: url('../fonts/proximanova-black.woff2') format('woff2'),
+         url('../fonts/proximanova-black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+  font-family: $font-family;
+  src: url('../fonts/proximanova-regular.woff2') format('woff2'),
+  url('../fonts/proximanova-regular.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
