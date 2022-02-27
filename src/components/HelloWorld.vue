@@ -11,19 +11,28 @@ Dropzone.autoDiscover = false;
 // add your frames here
 const images = Array(14).fill(null).map((_, index) => 'frame-' + (index + 1));
 
-function getImageUrl(name, extension = 'png') {
+function getImageUrl(name) {
   if (import.meta.url) {
-    return new URL(`/${name}.${extension}`, import.meta.url).href
+    return new URL(`/${name}.png`, import.meta.url).href
   }
 
-  return `./${name}.${extension}`;
+  return `./${name}.png`;
 }
 
 const canvasRef = ref();
-const refAngleControl = ref();
+const isImageExist = ref(false);
+const inputs = reactive({
+  angle: 0,
+  scale: 50
+});
 
 // image to be added to the canvas
 var image = new fabric.Image();
+
+function updateControls() {
+  inputs.scale = image.scaleX;
+  inputs.angle = image.angle;
+}
 
 function run() {
   // define the canvas
@@ -39,46 +48,27 @@ function run() {
     createImageThumbnails: false,
     maxFiles: 1,
     acceptedFiles: "image/*",
-    addRemoveLinks: true,
-    clickable: '#upload, #upload-text'
+    addRemoveLinks: false,
+    clickable: '#upload'
   });
 
-  // handle the canvas controls and overlay
-  (function () {
-    fabric.Object.prototype.transparentCorners = false;
+  fabric.Object.prototype.transparentCorners = false;
 
-    var $ = function (id) {
-      return document.getElementById(id)
-    };
+  canvasRef.value.on({
+    'object:moving': updateControls,
+    'object:scaling': updateControls,
+    'object:resizing': updateControls,
+    'object:rotating': updateControls
+  });
 
-    var scaleControl = $('scale-control');
-    scaleControl.oninput = function () {
-      image.scale(parseFloat(this.value) / 200).setCoords();
-      canvasRef.value.requestRenderAll();
-    };
-
-    function updateControls() {
-      scaleControl.value = image.scaleX;
-      refAngleControl.value.value = image.angle;
-    }
-
-    canvasRef.value.on({
-      'object:moving': updateControls,
-      'object:scaling': updateControls,
-      'object:resizing': updateControls,
-      'object:rotating': updateControls
-    });
-
-    canvasRef.value.setOverlayImage(getImageUrl('frames/' + images[0]), function () {
-      canvasRef.value.overlayImage.scaleToWidth(canvasRef.value.getWidth())
-      canvasRef.value.renderAll()
-    }, {
-      originX: 'left',
-      originY: 'top',
-      crossOrigin: 'anonymous'
-    });
-
-  })();
+  canvasRef.value.setOverlayImage(getImageUrl('frames/' + images[0]), function () {
+    canvasRef.value.overlayImage.scaleToWidth(canvasRef.value.getWidth())
+    canvasRef.value.renderAll()
+  }, {
+    originX: 'left',
+    originY: 'top',
+    crossOrigin: 'anonymous'
+  });
 
   var reader = new FileReader();
   reader.onload = function (event) {
@@ -120,11 +110,8 @@ function run() {
   // enable the download button and controls
   // remove the upload text
   imgUpload.on("addedfile", function (file) {
+    isImageExist.value = true;
     reader.readAsDataURL(file);
-    document.getElementById("download").disabled = false;
-    document.getElementById("angle-control").disabled = false;
-    document.getElementById("scale-control").disabled = false;
-    document.getElementById("upload-text").innerHTML = "";
   });
 
   // when the image is removed
@@ -132,25 +119,31 @@ function run() {
   // disable the download button and controls
   // re-add the upload text
   imgUpload.on("removedfile", function () {
-    canvasRef.value.remove(image);
-    document.getElementById("download").disabled = true;
-    document.getElementById("angle-control").disabled = true;
-    document.getElementById("scale-control").disabled = true;
-    document.getElementById("upload-text").innerHTML = "Загрузить";
+    isImageExist.value = false;
+    // canvasRef.value.remove(image);
   });
 }
 
-function angleControlHandler(event) {
-  image.set('angle', parseInt(event.target.value, 10)).setCoords();
+watch(() => inputs.scale, (value) => {
+  image.scale(parseFloat(value) / 200).setCoords();
   canvasRef.value.requestRenderAll();
-}
+});
+
+watch(() => inputs.angle, (value) => {
+  image.set('angle', parseInt(value, 10)).setCoords();
+  canvasRef.value.requestRenderAll();
+});
 
 // handle download
 // create a link and simulate a click to download the file
 function downloadFile() {
-  var e = canvasRef.value.toDataURL({format: "jpeg", quality: 1, multiplier: 4});
-  var r = document.createElement("a");
-  (r.href = e), (r.download = "profile-pic.jpeg"), document.body.appendChild(r), r.click(), document.body.removeChild(r);
+  const link = canvasRef.value.toDataURL({format: 'jpeg', quality: 1, multiplier: 4});
+  const linkNode = document.createElement('a');
+  linkNode.href = link;
+  linkNode.download = 'profile-pic.jpeg';
+  document.body.appendChild(linkNode);
+  linkNode.click();
+  document.body.removeChild(linkNode);
 }
 
 function resizeCanvas() {
@@ -174,6 +167,10 @@ function changeFrame(image) {
   });
 }
 
+function addFile() {
+
+}
+
 onMounted(run);
 
 // resize the canvas once it's loaded
@@ -183,10 +180,10 @@ window.addEventListener('resize', resizeCanvas);
 
 defineExpose({
   images,
-  refAngleControl,
+  inputs,
+  isImageExist,
   getImageUrl,
   changeFrame,
-  angleControlHandler,
   downloadFile
 });
 
@@ -212,8 +209,9 @@ defineExpose({
           <button
               id="upload"
               class="main__step__btn"
+              @click="addFile"
           >
-            <span id="upload-text">Загрузить</span>
+            Загрузить
           </button>
         </div>
       </div>
@@ -230,23 +228,28 @@ defineExpose({
             />
 
             <div class="main__step__builder__ava-controls">
-              <div class="pt-6 pt-6--rotation">
-                <label for="angle-control" class="text-lg font-medium leading-5">Rotation:</label>
+              <div class="pt-6--rotation">
+                <label for="angle-control">Rotation:</label>
                 <input
-                    ref="refAngleControl"
+                    v-model="inputs.angle"
                     type="range"
                     id="angle-control"
-                    value="0"
                     min="0"
                     max="360"
                     class="w-full"
-                    disabled
-                    @input="angleControlHandler"
+                    :disabled="!isImageExist"
                 >
               </div>
-              <div class="pt-6">
-                <label for="scale-control" class="text-lg font-medium leading-5">Scale:</label>
-                <input type="range" id="scale-control" value="50" min="1" max="100" class="w-full" disabled>
+              <div>
+                <label for="scale-control">Scale:</label>
+                <input
+                    v-model="inputs.scale"
+                    type="range"
+                    id="scale-control"
+                    min="1"
+                    max="100"
+                    :disabled="!isImageExist"
+                >
               </div>
             </div>
           </div>
@@ -255,10 +258,7 @@ defineExpose({
                 v-for="item in images"
                 @click="changeFrame(getImageUrl(`frames/`+ item))"
             >
-              <img
-                  :id="`frame-` + item"
-                  :src="getImageUrl(`previews/`+ item)"
-              >
+              <img :src="getImageUrl(`previews/`+ item)">
             </button>
           </div>
         </div>
@@ -272,15 +272,13 @@ defineExpose({
         </div>
         <div class="main__step__input">
           <button
-              id="download"
-              disabled
+              :disabled="!isImageExist"
               @click="downloadFile"
           >
             Скачать
           </button>
           </div>
       </div>
-
     </div>
     <social />
   </div>
