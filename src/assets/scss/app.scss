@@ -117,13 +117,12 @@ body {
     background: #E7F8FF;
   }
   &:nth-child(4) {
-    
+
   }
 
   &--1 {
     display: flex;
-    // padding: 20px 30px 15px 37px;
-    align-items: flex-end;
+    align-items: center;
   }
   &--4{
     display: flex;
@@ -175,6 +174,7 @@ body {
 
 .main__step___message {
   display: flex;
+  align-items: center;
 }
 .main__step__input button,
 .main__step__btn {
@@ -252,7 +252,7 @@ body {
       opacity: 0;
       transition: opacity 200ms;
     }
-    
+
     &.active{
       &:after{
         opacity: 1;
@@ -287,7 +287,7 @@ body {
     content: '+';
     right: 0;
   }
-  
+
   &--rotation{
     display: none;
   }
@@ -451,7 +451,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 @media (max-width: 740px){
   .wrapper{
-    max-width: 320px;
+    max-width: 94%;
   }
   .main__hash{
     font-size: 25px;
@@ -527,7 +527,7 @@ input[type=range]:focus::-ms-fill-upper {
       max-width: 100%;
     }
   }
-  
+
 .main__step__text {
   font-size: 14px;
 }
