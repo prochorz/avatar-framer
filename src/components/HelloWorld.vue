@@ -45,6 +45,7 @@ function run() {
   // declare the dropzone
   var imgUpload = new Dropzone("#upload", {
     url: "UploadImages",
+    uploadMultiple: false,
     autoProcessQueue: false,
     createImageThumbnails: false,
     maxFiles: 1,
@@ -111,29 +112,22 @@ function run() {
   // enable the download button and controls
   // remove the upload text
   imgUpload.on("addedfile", function (file) {
+    imgUpload.removeAllFiles();
     isImageExist.value = true;
+    canvasRef.value.remove(image);
     reader.readAsDataURL(file);
-  });
-
-  // when the image is removed
-  // remove it from the canvas
-  // disable the download button and controls
-  // re-add the upload text
-  imgUpload.on("removedfile", function () {
-    isImageExist.value = false;
-    // canvasRef.value.remove(image);
   });
 }
 
-watch(() => inputs.scale, (value) => {
-  image.scale(parseFloat(value) / 200).setCoords();
-  canvasRef.value.requestRenderAll();
-});
-
-watch(() => inputs.angle, (value) => {
+function updateAngle() {
   image.set('angle', parseInt(value, 10)).setCoords();
   canvasRef.value.requestRenderAll();
-});
+}
+
+function updateScale() {
+  image.scale(parseFloat(inputs.scale) / 200).setCoords();
+  canvasRef.value.requestRenderAll();
+}
 
 // handle download
 // create a link and simulate a click to download the file
@@ -168,10 +162,6 @@ function changeFrame(image) {
   });
 }
 
-function addFile() {
-
-}
-
 onMounted(run);
 
 // resize the canvas once it's loaded
@@ -183,6 +173,8 @@ defineExpose({
   images,
   inputs,
   isImageExist,
+  updateAngle,
+  updateScale,
   getImageUrl,
   changeFrame,
   downloadFile
@@ -210,7 +202,6 @@ defineExpose({
           <button
               id="upload"
               class="main__step__btn"
-              @click="addFile"
           >
             Загрузить
           </button>
@@ -239,6 +230,7 @@ defineExpose({
                     max="360"
                     class="w-full"
                     :disabled="!isImageExist"
+                    @input="updateAngle"
                 >
               </div>
               <div>
@@ -250,6 +242,7 @@ defineExpose({
                     min="1"
                     max="100"
                     :disabled="!isImageExist"
+                    @input="updateScale"
                 >
               </div>
             </div>
