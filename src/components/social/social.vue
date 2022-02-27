@@ -41,9 +41,9 @@ import { defineComponent } from 'vue';
 export default defineComponent({
     name: 'Social',
     setup() {
-        const LINK = window.location.href;
-        const SOCIAL_DESCRIPTION = 'socialDescription';
-        const SOCIAL_TITLE = 'socialTitle';
+        const LINK = 'prochorz.github.io/avatar-framer/';
+        const SOCIAL_DESCRIPTION = 'Ваше молчание убивает людей 🇺🇦 и 🇷🇺. Любая огласка сейчас поможет прекратить это всё. Сделайте свой вклад в мир во всем мире!';
+        const SOCIAL_TITLE = 'Молчание убивает';
 
         return {
             LINK,
