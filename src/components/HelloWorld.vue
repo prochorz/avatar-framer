@@ -2,6 +2,7 @@
 import {ref, onMounted, reactive, defineExpose, watch} from 'vue';
 import Dropzone from 'dropzone';
 import {fabric} from 'fabric';
+import Social from './social/social.vue';
 
 Dropzone.autoDiscover = false;
 
@@ -275,7 +276,8 @@ defineExpose({
         </button>
       </div>
     </div>
+    <social />
   </div>
 </template>
 
-<style scoped />
+<style />
