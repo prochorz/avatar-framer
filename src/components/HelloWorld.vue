@@ -3,6 +3,7 @@ import {ref, onMounted, reactive, defineExpose, watch} from 'vue';
 import Dropzone from 'dropzone';
 import {fabric} from 'fabric';
 import Social from './social/social.vue';
+import footerComp from './footerComp/footerComp.vue';
 
 Dropzone.autoDiscover = false;
 
@@ -281,6 +282,7 @@ defineExpose({
       </div>
     </div>
     <social />
+    <footerComp />
   </div>
 </template>
 

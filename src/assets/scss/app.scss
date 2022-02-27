@@ -92,7 +92,7 @@ body {
   width: 81%;
   margin: auto;
   font-size: 21px;
-  line-height: 26px;
+  line-height: 1.3;
   strong{
     font-weight: 700;
   }
@@ -120,7 +120,7 @@ body {
     
   }
 
-  &.main__step--1 {
+  &--1 {
     display: flex;
     // padding: 20px 30px 15px 37px;
     align-items: flex-end;
@@ -170,13 +170,13 @@ body {
 
 .main__step__text {
   font-size: 18px;
-  line-height: 32px;
+  line-height: 1.4;
 }
 
 .main__step___message {
   display: flex;
 }
-#download,
+.main__step__input button,
 .main__step__btn {
   padding: 10px 15px;
   background: #000;
@@ -286,11 +286,34 @@ body {
     content: '+';
     right: 0;
   }
+  
+  &--rotation{
+    display: none;
+  }
+}
+.main__step__builder__ava-controls{
   label{
     display: none;
   }
-  &--rotation{
-    display: none;
+  >div{
+    position: relative;
+    font-size: 16px;
+    margin-top: 1em;
+    &:before,
+    &:after{
+      position: absolute;
+      top: 0;
+      pointer-events: none;
+      color: #B6CAD2;
+    }
+    &:before{
+      content: '-';
+      left: 0;
+    }
+    &:after{
+      content: '+';
+      right: 0;
+    }
   }
 }
 
@@ -383,4 +406,85 @@ input[type=range]:focus::-ms-fill-lower {
 }
 input[type=range]:focus::-ms-fill-upper {
   background: #B6CAD2;
+}
+
+@media (max-width: 1200px){
+  .wrapper{
+    max-width: 720px;
+  }
+  .main__hash{
+    font-size: 45px;
+  }
+  .main__title{
+    font-size: 28px;
+  }
+  .main__slogan{
+    font-size: 16px;
+  }
+  .main__step{
+    display: block;
+  }
+  .main__step__share,
+  .main__step__input{
+    margin-left: 0;
+    margin-right: auto;
+    margin-top: 10px;
+  }
+  .main__step__builder__ava{
+    margin-right: 30px;
+  }
+  .main__mask_buttons button{
+    width: 70px;
+    height: 70px;
+    margin: 0 9px 5px;
+  }
+}
+@media (max-width: 740px){
+  .main__hash{
+    font-size: 25px;
+  }
+  .main__title{
+    font-size: 20px;
+  }
+  .main__slogan{
+    font-size: 14px;
+  }
+  .main__step{
+    padding: 5px 10px;
+  }
+  .main__step__share,
+  .main__step__input{
+    margin: 10px auto 0;
+    width: 100%;
+  }
+  .main__step__builder__ava{
+    min-width: 280px;
+    width: 280px;
+    margin: 0 auto;
+  }
+  .main__step__builder{
+    display: block;
+  }
+  .main__mask_buttons{
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 0;
+    button{
+      flex-shrink: 0;
+      width: 60px;
+      height: 60px;
+      margin: 0 3px 5px;
+    }
+  }
+  .main__step__share--item{
+    width: 35px;
+    margin: 0 6px;
+    img{
+      max-width: 100%;
+    }
+  }
+  
+.main__step__text {
+  font-size: 14px;
+}
 }
