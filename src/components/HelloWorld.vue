@@ -1,5 +1,5 @@
 <script setup>
-import {ref, onMounted, reactive, defineExpose, watch} from 'vue';
+import {ref, onMounted, reactive, defineExpose, watch, computed} from 'vue';
 import Dropzone from 'dropzone';
 import {fabric} from 'fabric';
 import Social from './social/social.vue';
@@ -10,7 +10,7 @@ Dropzone.autoDiscover = false;
 // Change the canvas frames
 // one per frame
 // add your frames here
-const images = Array(14).fill(null).map((_, index) => 'frame-' + (index + 1));
+const images = Array(13).fill(null).map((_, index) => 'frame-' + (index + 1));
 
 function getImageUrl(name) {
   if (import.meta.url) {
@@ -177,17 +177,35 @@ function changeFrame(item) {
   });
 }
 
+const isTouchExist = ref('ontouchstart' in window || navigator.msMaxTouchPoints);
+
+let timeoutId;
+const preventCanvasClass = ref();
+
+function trackPageScrolling() {
+  clearTimeout(timeoutId);
+  if (isTouchExist) {
+    preventCanvasClass.value = 'prevent-canvas-move';
+  } 
+  timeoutId = setTimeout(() => {
+    preventCanvasClass.value = null;
+  }, 500);
+}
+
+
 onMounted(run);
 
 // resize the canvas once it's loaded
 onMounted(resizeCanvas);
 
 window.addEventListener('resize', resizeCanvas);
+window.addEventListener('scroll', trackPageScrolling);
 
 defineExpose({
   images,
   inputs,
   isImageExist,
+  preventCanvasClass,
   updateAngle,
   updateScale,
   getImageUrl,
@@ -228,7 +246,10 @@ defineExpose({
           <div class="main__step__text">Выберите маску для аватара из предложенных ниже</div>
         </div>
         <div class="main__step__builder">
-          <div class="main__step__builder__ava">
+          <div
+            :class="preventCanvasClass"
+            class="main__step__builder__ava"
+          >
             <canvas
                 id="canvas-id"
                 class="main__step__builder__ava-canvas"

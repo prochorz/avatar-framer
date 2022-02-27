@@ -531,4 +531,8 @@ input[type=range]:focus::-ms-fill-upper {
 .main__step__text {
   font-size: 14px;
 }
+
+.prevent-canvas-move {
+  pointer-events: none;
+}
 }
