@@ -263,7 +263,7 @@ defineExpose({
         </div>
 
       </div>
-      <div class="main__step">
+      <div class="main__step"> d
         Download your new profile image!
 
         <button
