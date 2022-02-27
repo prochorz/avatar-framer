@@ -125,6 +125,7 @@ function run() {
     isImageExist.value = true;
     canvasRef.value.remove(image);
     reader.readAsDataURL(file);
+    window.gtag('addedFile');
   });
 }
 
@@ -148,6 +149,7 @@ function downloadFile() {
   document.body.appendChild(linkNode);
   linkNode.click();
   document.body.removeChild(linkNode);
+  window.gtag('downloadFile');
 }
 
 function resizeCanvas() {

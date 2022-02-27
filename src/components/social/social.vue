@@ -11,6 +11,7 @@
             :url="LINK"
             :title="SOCIAL_TITLE"
             :description="SOCIAL_DESCRIPTION"
+            @click="gtagHandler('share_vk')"
         >
           <img :src="vkShare" alt="vk icon">
         </ShareNetwork>
@@ -21,6 +22,7 @@
             :url="LINK"
             :title="SOCIAL_TITLE"
             :description="SOCIAL_DESCRIPTION"
+            @click="gtagHandler('share_fb')"
         >
           <img :src="fbShare" alt="facebook icon">
         </ShareNetwork>
@@ -31,6 +33,7 @@
             :url="LINK"
             :title="SOCIAL_TITLE"
             :description="SOCIAL_DESCRIPTION"
+            @click="gtagHandler('share_od')"
         >
           <img :src="odShare" alt="odnoklassniki icon">
         </ShareNetwork>
@@ -54,11 +57,16 @@ export default defineComponent({
     const SOCIAL_DESCRIPTION = 'Ваше молчание убивает людей 🇺🇦 и 🇷🇺. Любая огласка сейчас поможет прекратить это всё. Сделайте свой вклад в мир во всем мире!';
     const SOCIAL_TITLE = 'Молчание убивает';
 
+    function gtagHandler(...arg) {
+      window.gtag(arg)
+    }
+
     return {
       LINK,
       vkShare,
       fbShare,
       odShare,
+      gtagHandler,
       SOCIAL_TITLE,
       SOCIAL_DESCRIPTION
     }
