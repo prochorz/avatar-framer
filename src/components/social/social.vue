@@ -12,7 +12,7 @@
             :title="SOCIAL_TITLE"
             :description="SOCIAL_DESCRIPTION"
         >
-          <img :src="vkShare" alt="">
+          <img :src="vkShare" alt="vk icon">
         </ShareNetwork>
       </div>
       <div class="main__step__share--item">
@@ -22,7 +22,7 @@
             :title="SOCIAL_TITLE"
             :description="SOCIAL_DESCRIPTION"
         >
-          <img :src="fbShare" alt="">
+          <img :src="fbShare" alt="facebook icon">
         </ShareNetwork>
       </div>
       <div class="main__step__share--item">
@@ -32,7 +32,7 @@
             :title="SOCIAL_TITLE"
             :description="SOCIAL_DESCRIPTION"
         >
-          <img :src="odShare" alt="">
+          <img :src="odShare" alt="odnoklassniki icon">
         </ShareNetwork>
       </div>
     </div>
