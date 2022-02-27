@@ -312,10 +312,7 @@ defineExpose({
           <div class="main__step__text">Скачайте картинку и установите на аватарку</div>
         </div>
         <div class="main__step__input">
-          <button
-              :disabled="!isImageExist"
-              @click="downloadFile"
-          >
+          <button @click="downloadFile">
             Скачать
           </button>
           </div>
