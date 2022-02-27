@@ -440,6 +440,9 @@ input[type=range]:focus::-ms-fill-upper {
   }
 }
 @media (max-width: 740px){
+  .wrapper{
+    max-width: 320px;
+  }
   .main__hash{
     font-size: 25px;
   }
