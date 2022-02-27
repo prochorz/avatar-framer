@@ -20,7 +20,9 @@ function getImageUrl(name) {
   return `./${name}.png`;
 }
 
+const currentMask = ref(images[0]);
 const canvasRef = ref();
+const defaultAva = ref();
 const isImageExist = ref(false);
 const inputs = reactive({
   angle: 0,
@@ -42,6 +44,12 @@ function run() {
     height: 500
   });
 
+  fabric.Image.fromURL(getImageUrl('default-ava'), function(myImg) {
+    const img = myImg.set({ left: 0, top: 0 ,width: 500,height: 500});
+    defaultAva.value = img;
+    canvasRef.value.add(img);
+  });
+
   // declare the dropzone
   var imgUpload = new Dropzone("#upload", {
     url: "UploadImages",
@@ -57,7 +65,7 @@ function run() {
   fabric.Object.prototype.transparentCorners = false;
 
   canvasRef.value.on({
-    'object:moving': updateControls,
+    // 'object:moving': updateControls,
     'object:scaling': updateControls,
     'object:resizing': updateControls,
     'object:rotating': updateControls
@@ -113,6 +121,7 @@ function run() {
   // remove the upload text
   imgUpload.on("addedfile", function (file) {
     imgUpload.removeAllFiles();
+    canvasRef.value.remove(defaultAva.value);
     isImageExist.value = true;
     canvasRef.value.remove(image);
     reader.readAsDataURL(file);
@@ -151,7 +160,13 @@ function resizeCanvas() {
   outerCanvasContainer.style.height = `${outerCanvasContainer.clientWidth}px`;
 }
 
-function changeFrame(image) {
+function getActiveClass(item) {
+  return item === currentMask.value ? 'active' : null;
+}
+
+function changeFrame(item) {
+  const image = getImageUrl(`frames/`+ item);
+  currentMask.value = item;
   canvasRef.value.setOverlayImage(image, function () {
     canvasRef.value.overlayImage.scaleToWidth(canvasRef.value.getWidth())
     canvasRef.value.renderAll()
@@ -250,7 +265,9 @@ defineExpose({
           <div class="main__mask_buttons">
             <button
                 v-for="item in images"
-                @click="changeFrame(getImageUrl(`frames/`+ item))"
+                :style="{ 'background-image': `url(${getImageUrl('default-ava')})` }"
+                :class="getActiveClass(item)"
+                @click="changeFrame(item)"
             >
               <img :src="getImageUrl(`previews/`+ item)">
             </button>
