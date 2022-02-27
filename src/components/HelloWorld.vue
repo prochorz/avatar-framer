@@ -10,7 +10,7 @@ Dropzone.autoDiscover = false;
 // Change the canvas frames
 // one per frame
 // add your frames here
-const images = Array(14).fill(null).map((_, index) => 'frame-' + (index + 1));
+const images = Array(13).fill(null).map((_, index) => 'frame-' + (index + 1));
 
 function getImageUrl(name) {
   if (import.meta.url) {
