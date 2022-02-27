@@ -6,19 +6,52 @@
         </div>
         <div class="main__step__input">
             Поделитесь в соц сетях и создайте мир над головами
-            <div
-                class="sharing-item sharing-fb"
-                @click="">
-                <div class="sharing-img">вввв</div>
-            </div>
+            <ShareNetwork
+                network="vk"
+                :url="LINK"
+                :title="SOCIAL_TITLE"
+                :description="SOCIAL_DESCRIPTION"
+            >
+                Share on vk
+            </ShareNetwork>
+            <ShareNetwork
+                network="facebook"
+                :url="LINK"
+                :title="SOCIAL_TITLE"
+                :description="SOCIAL_DESCRIPTION"
+            >
+                Share on Facebook
+            </ShareNetwork>
+            <ShareNetwork
+                network="odnoklassniki"
+                :url="LINK"
+                :title="SOCIAL_TITLE"
+                :description="SOCIAL_DESCRIPTION"
+            >
+                Share on odnoklassniki
+            </ShareNetwork>
         </div>
     </div>
 </template>
 
 <script>
-export default {
-    name: 'social',
-};
+import { defineComponent } from 'vue';
+
+
+export default defineComponent({
+    name: 'Social',
+    setup() {
+        const LINK = window.location.href;
+        const SOCIAL_DESCRIPTION = 'socialDescription';
+        const SOCIAL_TITLE = 'socialTitle';
+
+        return {
+            LINK,
+            SOCIAL_TITLE,
+            SOCIAL_DESCRIPTION
+        }
+    }
+});
 </script>
 
 <style lang="scss" src="./social.scss" />
