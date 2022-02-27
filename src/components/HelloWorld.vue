@@ -229,7 +229,7 @@ defineExpose({
       <div class="main__step main__step--1">
         <div class="main__step___message">
           <span class="main__step__count">1</span>
-          <div class="main__step__text">Вставьте ссылку на свою соц.сеть Сюда загрузится ваш аватар</div>
+          <div class="main__step__text">Загрузите ваш аватар</div>
         </div>
         <div class="main__step__input">
           <button
@@ -243,7 +243,7 @@ defineExpose({
       <div class="main__step">
         <div class="main__step___message">
           <span class="main__step__count">2</span>
-          <div class="main__step__text">Выберите маску для аватара из предложенных ниже</div>
+          <div class="main__step__text">Выберите рамку для аватара</div>
         </div>
         <div class="main__step__builder">
           <div

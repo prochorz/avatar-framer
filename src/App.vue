@@ -5,10 +5,8 @@ import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-
-        <HelloWorld />
-
+  <HelloWorld/>
 </template>
 
-<style src="../node_modules/reset-css/reset.css" lang="css" />
-<style src="./assets/scss/app.scss" lang="scss" />
+<style src="../node_modules/reset-css/reset.css" lang="css"/>
+<style src="./assets/scss/app.scss" lang="scss"/>
