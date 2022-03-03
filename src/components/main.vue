@@ -149,8 +149,9 @@ function downloadFile() {
   document.body.appendChild(linkNode);
   linkNode.click();
   document.body.removeChild(linkNode);
-  window.gtag('downloadFile');
+  // window.gtag('downloadFile');
 
+  gtag('event', 'click_download', {'event_category': 'button', 'event_label': 'Скачать'});
   
 }
 
