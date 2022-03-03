@@ -151,7 +151,6 @@ function downloadFile() {
   document.body.removeChild(linkNode);
   window.gtag('downloadFile');
 
-  gtag('event', 'click_download', {'event_category': 'button', 'event_label': 'Скачать'});
   
 }
 
